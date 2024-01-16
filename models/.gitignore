@@ -1,0 +1,17 @@
+*.pyc
+*~
+__pycache__
+db.sqlite3
+/static
+/media
+
+# Ignore IDE specific files
+.idea/
+.vscode/
+*.swp
+
+# Ignore all log files
+*.log
+
+# Ignore local configuration
+/local_settings.py

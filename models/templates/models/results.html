@@ -1,0 +1,59 @@
+{% extends "models/base.html" %}
+
+{% block body %}
+
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Manufacturing Process Simulation Results</h1>
+
+    <!-- Simulation Results Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>Simulation Details</h2>
+        </div>
+        <div class="card-body">
+            {% if results %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Process Name</th>
+                        <th>Start Time</th>
+                        <th>Completion Time</th>
+                        <th>Waiting Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>{{ result.item_name }}</td>
+                        <td>{{ result.process_name }}</td>
+                        <td>{{ result.start_time }}</td>
+                        <td>{{ result.completion_time }}</td>
+                        <td>{{ result.waiting_time }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No results to display.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Plot Section -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Simulation Plot</h2>
+        </div>
+        <div class="card-body">
+            {% if plot_base64 %}
+            <img src="data:image/png;base64,{{ plot_base64 }}" alt="Simulation Plot" class="img-fluid">
+            {% else %}
+            <p>No plot to display.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
