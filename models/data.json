@@ -1,0 +1,45 @@
+{
+    "environment": {
+      "Simulation_time": "1230",
+      "warm_up_time": "12",
+      "interarrival": "1"
+    },
+    "process": [
+        {
+        "type": "process",
+        "name": "Assembly Line A",
+        "distribution": "fixed",
+        "cycle_time": "30",
+        "changeover": "5",
+        "resource": "1"
+      },
+       {
+        "type": "queue",
+        "name": "Painting Station",
+        "capacity": "80",
+        "initial": "40"
+      },[
+        {
+            "type": "process",
+          "name": "Welding Station 1",
+          "distribution": "uniform",
+          "min_value": "15",
+          "max_value": "25",
+          "changeover": "3",
+          "cycle_time":"15",
+          "resource": "1"
+        },
+        {
+            "type": "process",
+          "name": "Welding Station 2",
+          "distribution": "uniform",
+          "min_value": "15",
+          "max_value": "25",
+          "changeover": "3",
+          "cycle_time":"15",
+          "resource": "1"
+        }
+      ]
+    ]
+  }
+  

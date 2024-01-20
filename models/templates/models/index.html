@@ -59,6 +59,10 @@
                     <label for="changeover1">Changeover:</label>
                     <input type="number" class="form-control" name="changeover1" required>
                 </div>
+                <div class="form-group">
+                    <label for="resource1">Available Resources:</label>
+                    <input type="number" class="form-control" name="resource1" required>
+                </div>
             </div>
         </div>
         <input type="hidden" name="step_count" id="stepCount" value="1">
@@ -139,7 +143,7 @@
         newForm.appendChild(distributionFormGroup);
         newForm.appendChild(createInputField("Cycle Time:", "number", `cycleTime${stepCount}`));
         newForm.appendChild(createInputField("Changeover:", "number", `changeover${stepCount}`));
-
+        newForm.appendChild(createInputField("Available Resources:", "number", `resource${stepCount}`));
         // Append the new form to the form container
         formContainer.appendChild(newForm);
         document.getElementById("stepCount").value = stepCount;
