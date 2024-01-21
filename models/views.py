@@ -51,14 +51,15 @@ def api(request):
         data = json.loads(request.body)
          # Extract environment settings
         env_data = data['environment']
-        simulation_time = int(env_data['Simulation_time'])
+        simulation_time = int(env_data['simulation_time'])
         warm_up_time = int(env_data['warm_up_time'])
         inter_arrival_time = int(env_data['interarrival'])
 
         #
         # Process the steps
         process_steps = []
-        process_data = data['process']
+        #check how the data is formatted
+        process_data = data['processes']
         for step_value in process_data:
             if isinstance(step_value, dict):
                 # If its a dict then just add it 
@@ -77,20 +78,21 @@ def api(request):
                         if(len(aggregated_step)==0):
                             aggregated_step = processed_step
                         else:
-                            # Aggregate resources for similar steps
+                            # Aggregate resources for similar steps but check how the data is coming from the client
                             aggregated_step['resource'] += processed_step['resource']
 
                 process_steps.append(aggregated_step)
         print(process_steps, simulation_time)
         # Run simulation
-        avg_waiting_time, avg_lead_time, throughput, plot_base64 = run_and_plot_simulation(simulation_time, warm_up_time, inter_arrival_time, process_steps)
+        results, avg_waiting_time, avg_lead_time, throughput, plot_base64 = run_and_plot_simulation(simulation_time, warm_up_time, inter_arrival_time, process_steps)
 
         # Prepare and send JSON response
         response_data = {
             'average_waiting_time': avg_waiting_time,
             'average_lead_time':avg_lead_time,
             'average_throughput':throughput,
-            'plot_base64': plot_base64  # Uncomment if you want to send the plot as well
+            'results':results,
+            'plot_base64': plot_base64 
         }
         return JsonResponse(response_data)
 

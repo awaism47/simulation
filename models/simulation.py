@@ -176,4 +176,4 @@ def run_and_plot_simulation(simulation_time, warm_up_time, inter_arrival_time, p
     simulation = ManufacturingSimulation(env, simulation_time, warm_up_time, process_steps, inter_arrival_time)
     results,avg_waiting_time, avg_lead_time, throughput = simulation.run()
     plot_base64 = simulation.plot_results()
-    return avg_waiting_time, avg_lead_time, throughput, plot_base64
+    return results,avg_waiting_time, avg_lead_time, throughput, plot_base64

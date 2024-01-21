@@ -4,7 +4,7 @@
       "warm_up_time": "12",
       "interarrival": "1"
     },
-    "process": [
+    "processess": [
         {
         "type": "process",
         "name": "Assembly Line A",
@@ -26,17 +26,15 @@
           "min_value": "15",
           "max_value": "25",
           "changeover": "3",
-          "cycle_time":"15",
           "resource": "1"
         },
         {
             "type": "process",
           "name": "Welding Station 2",
           "distribution": "uniform",
-          "min_value": "15",
-          "max_value": "25",
+          "min_value": "20",
+          "max_value": "30",
           "changeover": "3",
-          "cycle_time":"15",
           "resource": "1"
         }
       ]
