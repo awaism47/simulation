@@ -1,79 +1,92 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulation Creation</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>SimuCreate - Unlock Efficiency in Manufacturing</title>
     <style>
-        .banner {
-            background: url('/static/banner.png') no-repeat center center; /* Replace with your image URL */
-            background-size: cover;
-            height: 500px;
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            color: black;
-            text-align: center;
+            flex-direction: column;
+            min-height: 100vh;
         }
-        .banner h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+        .header {
+            background-color: #7D3C98; /* A placeholder for the purple background */
+            color: white;
+            padding: 20px;
+            text-align: left;
         }
-        .banner button {
-            font-size: 1.2rem;
-            padding: 10px 30px;
-        }
-        .banner_2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            height: 100px;
+        .main-content {
+            text-align: left;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            color: black;
-            text-align: center;
+            /*padding: 50px 20px; */
         }
-        .banner_2 {
-            font-size: 1.2rem;
-            padding: 10px 30px;
+        .image-content {
+        flex: 1;
+        display: flex;
+        justify-content: top;
+        align-items: center;
+        padding: 10px;
+    }
+    .text-content {
+        text-align: left;
+        flex: 1;
+        display: flex;
+        padding: 10px;
+    }
+        .sign-up-button {
+            background-color: #8E44AD; /* A placeholder for the sign-up button color */
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .footer {
+            background-color: #5B2C6F; /* A placeholder for the footer background color */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
     </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">SimuCreate</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="banner">
-        <div>
-        </div>
+    </head>
+    <body>
+    <div class="header">
+        <h1>SimuCreate</h1>
     </div>
-    <div class="banner_2">
-        <div>
-            <h1>Create Your Simulation</h1>
-            <button class="btn btn-primary" onclick="location.href='{% url 'index' %}'"">Create Simulation</button>
+    
+    <div class="main-content">
+        <div class="text-content">
+            <div>
+                <h2>Unlock Efficiency: Transform Your Manufacturing Process with Advanced Simulation</h2>
+                <p>Our cutting-edge simulation service is designed specifically for small manufacturing companies like yours, offering you the power to analyse, visualise, and enhance your production processes with unprecedented precision and within minutes.</p>
+                <button class="sign-up-button" onclick="location.href='{% url 'index' %}'">Sign Up</button>
+            </div>
+        </div>
+        <div class="image-content">
+            <img src="{% static 'home_page.png' %}" alt="Simulation Process" class="content-image">
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <div class="footer">
+        <p>&copy; 2024 SimuCreate. All rights reserved.</p>
+    </div>
 </body>
 </html>

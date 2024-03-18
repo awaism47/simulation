@@ -1,13 +1,16 @@
 import simpy
 import random
 import matplotlib
-matplotlib.use('Agg')  # Use non-interactive backend for matplotlib
 import matplotlib.pyplot as plt
 import io
 import base64
+matplotlib.use('Agg')  # Use non-interactive backend for matplotlib
+
 
 class ManufacturingSimulation:
-    def __init__(self, env, simulation_time, warm_up_time, process_steps, inter_arrival_time):
+
+    def __init__(self, env, simulation_time, warm_up_time,
+                 process_steps, inter_arrival_time):
         self.env = env
         self.simulation_time = simulation_time
         self.warm_up_time = warm_up_time
@@ -15,17 +18,21 @@ class ManufacturingSimulation:
         self.inter_arrival_time = inter_arrival_time
         self.results = []
         self.waiting_times = []
-        self.throughput_times = [] 
-        self.waiting_times_per_process = {step['name']: [] for step in process_steps}
-        self.simpy_objects={}
+        self.throughput_times = []
+        self.waiting_times_per_process = {step['name']: []
+                                          for step in process_steps}
+        self.simpy_objects = {}
+
     def setup(self):
         self.resources = {}
         for step_data in self.process_steps:
-            step_key=step_data['name']
-            #need to fix this
+            step_key = step_data['name']
+            # need to fix this
             if step_data['type']=='queue':
                 # for containers
-                self.resources[step_key] = simpy.Container(self.env, capacity=step_data['resource'],init=step_data['initial_amount'])
+                self.resources[step_key] = simpy.Container(
+                    self.env, capacity=step_data['resource'],
+                    init=step_data['initial_amount'])
             else:
                 # For resource
                 self.resources[step_key] = simpy.Resource(self.env, capacity=step_data['resource'])
@@ -37,7 +44,9 @@ class ManufacturingSimulation:
     def create_process(self, item_number, item_name, step_key, step_data, resource):
         cycle_time = calculate_cycle_time(step_data)
         current_step_index = self.process_steps.index(step_data)
-        next_step = self.process_steps[current_step_index + 1] if current_step_index + 1 < len(self.process_steps) else None
+        next_step = self.process_steps[
+            current_step_index + 1] if current_step_index + 1 < len(
+                self.process_steps) else None
         print(f'next step is {next_step}')
 
         def process(env):
@@ -48,9 +57,9 @@ class ManufacturingSimulation:
                 yield resource.get(1)  # Get an item from the container
 
             # Handle processing with the resource
-            start_time=0
-            wait=0
-            completion_time=0
+            start_time = 0
+            wait = 0
+            completion_time = 0
             if step_data['type'] == 'process':
                 with resource.request() as req:
                     yield req
@@ -63,21 +72,21 @@ class ManufacturingSimulation:
 
             # Record results
             if env.now >= self.warm_up_time:
-                        self.results.append({
-                            'item_number': item_number,
-                            'item_name': item_name,
-                            'process_name': step_data['name'],
-                            'start_time': start_time,
-                            'waiting_time': wait,
-                            'completion_time': completion_time
-                        })
-                        self.waiting_times_per_process[step_key].append(wait)
+                self.results.append({
+                    'item_number': item_number,
+                    'item_name': item_name,
+                    'process_name': step_data['name'],
+                    'start_time': start_time,
+                    'waiting_time': wait,
+                    'completion_time': completion_time
+                    })
+                self.waiting_times_per_process[step_key].append(wait)
                     
             # Handle if next step is a queue
             if next_step and next_step['type'] == 'queue':
                 next_step_object = self.simpy_objects.get(next_step['name'])
                 if next_step_object:
-                    yield next_step_object.put(1) # Put an item into the next container
+                    yield next_step_object.put(1)  # Put an item into the next container
         return process
 
     def item_generator(self, resources):
@@ -94,7 +103,6 @@ class ManufacturingSimulation:
     def calculate_waiting_time_for_step(self, step_name, item_number):
         # This is a placeholder implementation.
         # You need to adapt this method based on how you're tracking waiting times.
-        
         # Example logic (assuming waiting times are stored in a specific way):
         total_waiting_time = 0
         for result in self.results:
@@ -102,7 +110,6 @@ class ManufacturingSimulation:
                 total_waiting_time += result['waiting_time']
         return total_waiting_time
 
-        
     def run(self):
         self.setup()
         self.env.run(until=self.simulation_time)
@@ -155,8 +162,7 @@ class ManufacturingSimulation:
         plt.savefig(buf, format='png')
         buf.seek(0)
         image_base64 = base64.b64encode(buf.read()).decode('utf-8')
-        buf.close()
-        
+        buf.close()     
         return image_base64
 
 
@@ -171,9 +177,12 @@ def calculate_cycle_time(step):
     else:
         return step.get('cycle_time', 10)  # Default fixed cycle time
 
-def run_and_plot_simulation(simulation_time, warm_up_time, inter_arrival_time, process_steps):
+
+def run_and_plot_simulation(simulation_time, warm_up_time,
+                            inter_arrival_time, process_steps):
     env = simpy.Environment()
-    simulation = ManufacturingSimulation(env, simulation_time, warm_up_time, process_steps, inter_arrival_time)
-    results,avg_waiting_time, avg_lead_time, throughput = simulation.run()
+    simulation = ManufacturingSimulation(
+        env, simulation_time, warm_up_time, process_steps, inter_arrival_time)
+    results, avg_waiting_time, avg_lead_time, throughput = simulation.run()
     plot_base64 = simulation.plot_results()
-    return results,avg_waiting_time, avg_lead_time, throughput, plot_base64
+    return results, avg_waiting_time, avg_lead_time, throughput, plot_base64
